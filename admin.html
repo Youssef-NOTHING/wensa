@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#102f35"><title>WENSA Admin</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="admin.css"><script src="products-seed.js"></script><script src="admin.js" defer></script></head>
+<body class="admin-body">
+<header class="admin-header"><a class="brand" href="index.html"><img src="assets/wensa-logo.jpeg" alt="">WENSA <span class="admin-label">ADMIN</span></a><a class="back-link" href="index.html">← View website</a></header>
+<main class="admin-main">
+  <section id="login-panel" class="login-card">
+    <p class="eyebrow">LOCAL ADMIN AREA</p><h1>Welcome back.</h1><p class="muted">Sign in to manage the WENSA store and view contact messages on this device.</p>
+    <form id="login-form"><label>Admin password<input id="admin-password" type="password" required placeholder="Enter password"></label><button class="button dark" type="submit">Sign in →</button><p id="login-error" class="error"></p></form>
+    <small class="hint">First-time demo password: <b>wensa2026</b></small>
+  </section>
+  <section id="dashboard" hidden>
+    <div class="dash-top"><div><p class="eyebrow">WENSA MANAGEMENT</p><h1>Dashboard</h1><p class="muted">Your changes are saved locally in this browser.</p></div><button id="logout" class="button outline-dark">Log out</button></div>
+    <div class="stats"><article><small>PRODUCTS</small><strong id="product-count">0</strong></article><article><small>MESSAGES</small><strong id="message-count">0</strong></article><article><small>STORAGE</small><strong>LOCAL</strong></article></div>
+    <div class="admin-grid">
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">STORE</p><h2 id="editor-title">Add a product</h2></div></div>
+        <form id="product-form">
+          <input type="hidden" id="product-id">
+          <label>Product name<input id="product-name" required placeholder="e.g. WENSA Hope T-shirt"></label>
+          <label>Category / small label<input id="product-type" placeholder="e.g. WENSA COLLECTION"></label>
+          <label>Price<input id="product-price" placeholder="e.g. 120 MAD"></label>
+          <label>Product image URL (optional)<input id="product-image" placeholder="https://..."></label>
+          <label>Or upload product image<input id="product-upload" type="file" accept="image/*"></label>
+          <div id="image-preview-wrap" hidden><img id="image-preview" alt="Product image preview"><button type="button" id="remove-image" class="text-button danger">Remove image</button></div>
+          <label>Small description (shown under the product name)<textarea id="product-description" rows="3" maxlength="140" placeholder="e.g. Un design marocain authentique, élégant et fait main."></textarea></label>
+          <label class="check-label"><input id="product-active" type="checkbox" checked> Show this product on the website</label>
+          <label class="check-label"><input id="product-custom" type="checkbox"> Personalized product (customer writes what to print / write on it)</label>
+          <div class="form-actions"><button class="button dark" type="submit" id="save-product">Save product</button><button class="button outline-dark" type="button" id="cancel-edit">Clear</button></div>
+        </form>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">YOUR CATALOGUE</p><h2>Products</h2></div></div><div id="product-list" class="admin-list"></div></section>
+    </div>
+    <div class="admin-grid secondary-grid">
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">EVENTS</p><h2>Manage events</h2></div></div>
+        <form id="event-form">
+          <input type="hidden" id="event-id">
+          <label>Event title<input id="event-title" required placeholder="e.g. Solidarity Walk"></label>
+          <label>City / location<input id="event-city" required placeholder="e.g. Rabat"></label>
+          <label>Date<input id="event-date" required placeholder="Saturday · 10:00 AM"></label>
+          <label>Image URL (optional)<input id="event-image" placeholder="https://..."></label>
+          <label>Or upload event image<input id="event-upload" type="file" accept="image/*"></label>
+          <div id="event-image-preview-wrap" hidden><img id="event-image-preview" alt="Event image preview"><button type="button" id="remove-event-image" class="text-button danger">Remove image</button></div>
+          <label>Short description<textarea id="event-description" rows="3" placeholder="Describe the event..."></textarea></label>
+          <label class="check-label"><input id="event-active" type="checkbox" checked> Publish this event</label>
+          <div class="form-actions"><button class="button dark" type="submit" id="save-event">Save event</button><button class="button outline-dark" type="button" id="clear-event">Clear</button></div>
+        </form>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><p class="eyebrow">LIVE EVENTS</p><h2>Event list</h2></div></div><div id="event-list" class="admin-list"></div></section>
+    </div>
+    <section class="panel config-panel"><div class="panel-heading"><div><p class="eyebrow">CHAT BOT</p><h2>Assistant settings</h2></div></div>
+      <form id="chat-settings-form">
+        <label class="check-label"><input id="chat-enabled" type="checkbox" checked> Enable chatbot on the website</label>
+        <label>Bot name<input id="chat-name" value="WENSA Assistant"></label>
+        <label>Welcome message<textarea id="chat-welcome" rows="3">Hello! Ask me about WENSA, products, donations or contacting the team.</textarea></label>
+        <div class="form-actions"><button class="button dark" type="submit">Save settings</button></div>
+      </form>
+    </section>
+    <section class="panel orders-panel"><div class="panel-heading"><div><p class="eyebrow">ORDERS</p><h2>Customer orders</h2></div><button id="refresh-orders" class="text-button">Refresh</button></div><div class="orders-pw"><input id="orders-password" type="password" placeholder="Server ADMIN_PASSWORD (from .env)"><button id="load-orders" class="button dark" type="button">Load orders</button></div><p id="orders-error" class="error"></p><div id="order-list" class="message-list"></div></section>
+    <section class="panel messages-panel"><div class="panel-heading"><div><p class="eyebrow">INBOX</p><h2>Contact messages</h2></div><button id="clear-messages" class="text-button">Clear all</button></div><div id="message-list" class="message-list"></div></section>
+    <section class="local-warning"><b>Local demo database</b><p>Products, events, visits and messages are stored in this browser's localStorage. They are not shared across devices, and clearing browser data can erase them. This demo password is not secure authentication. Do not use this setup for real customer data or public admin access.</p><button id="export-data" class="button outline-dark">Export backup (JSON) ↓</button><button id="reset-data" class="text-button danger">Reset demo data</button></section>
+  </section>
+</main>
+</body></html>
